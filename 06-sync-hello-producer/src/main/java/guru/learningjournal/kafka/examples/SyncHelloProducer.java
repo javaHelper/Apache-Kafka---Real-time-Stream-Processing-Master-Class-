@@ -16,8 +16,7 @@ public class SyncHelloProducer {
     private static final Logger logger = LogManager.getLogger();
 
     public static void main(String[] args) {
-
-        logger.trace("Creating Kafka Producer...");
+        logger.trace("=== Creating Kafka Producer...===");
         Properties props = new Properties();
         props.put(ProducerConfig.CLIENT_ID_CONFIG, AppConfigs.applicationID);
         props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, AppConfigs.bootstrapServers);
