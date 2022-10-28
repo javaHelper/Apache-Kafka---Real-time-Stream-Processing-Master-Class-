@@ -25,7 +25,7 @@ public class HelloProducer {
         KafkaProducer<Integer, String> producer = new KafkaProducer<>(props);
         producer.initTransactions();
 
-        logger.info("Starting First Transaction...");
+        logger.info("## Starting First Transaction...");
         producer.beginTransaction();
 
         try {
@@ -42,7 +42,7 @@ public class HelloProducer {
             throw new RuntimeException(e);
         }
 
-        logger.info("Starting Second Transaction...");
+        logger.info("------- Starting Second Transaction for Abort ... ----");
         producer.beginTransaction();
         try {
             for (int i = 1; i <= AppConfigs.numEvents; i++) {
