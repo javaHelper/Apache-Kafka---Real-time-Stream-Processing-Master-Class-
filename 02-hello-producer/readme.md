@@ -1,5 +1,13 @@
 # Hello Producer
+---
 
+# Create Topic
+
+```sh
+$KAFKA_HOME/bin/kafka-topics.sh --create --bootstrap-server localhost:9092 --topic hello-producer-topic --partitions 5 --replication-factor 3
+```
+
+---
 HelloProducer.java
 
 ```java
