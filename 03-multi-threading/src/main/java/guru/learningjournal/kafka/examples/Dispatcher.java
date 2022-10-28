@@ -24,7 +24,7 @@ public class Dispatcher implements Runnable {
 
     @Override
     public void run() {
-        logger.info("Start Processing " + fileLocation);
+        logger.info("## Start Processing " + fileLocation);
         File file = new File(fileLocation);
         int counter = 0;
 
@@ -34,7 +34,7 @@ public class Dispatcher implements Runnable {
                 producer.send(new ProducerRecord<>(topicName, null, line));
                 counter++;
             }
-            logger.info("Finished Sending " + counter + " messages from " + fileLocation);
+            logger.info("### Finished Sending " + counter + " messages from " + fileLocation);
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
