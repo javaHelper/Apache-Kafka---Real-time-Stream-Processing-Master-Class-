@@ -51,10 +51,12 @@ public class PosValidator {
             for (ConsumerRecord<String, PosInvoice> record : records) {
                 if (record.value().getDeliveryType().equals("HOME-DELIVERY") && record.value().getDeliveryAddress().getContactNumber().equals("")) {
                     //Invalid
+                    System.out.println("------------------------------------------");
                     producer.send(new ProducerRecord<>(AppConfigs.invalidTopicName, record.value().getStoreID(), record.value()));
                     logger.info("## invalid record - " + record.value().getInvoiceNumber());
                 } else {
                     //Valid
+                    System.out.println("===========================================");
                     producer.send(new ProducerRecord<>(AppConfigs.validTopicName, record.value().getStoreID(), record.value()));
                     logger.info(">>> valid record - " + record.value().getInvoiceNumber());
                 }
