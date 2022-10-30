@@ -24,7 +24,7 @@ public class PosValidator {
 
     @SuppressWarnings("InfiniteLoopStatement")
     public static void main(String[] args) {
-        // Consumer
+
         Properties consumerProps = new Properties();
         consumerProps.put(ConsumerConfig.CLIENT_ID_CONFIG, AppConfigs.applicationID);
         consumerProps.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, AppConfigs.bootstrapServers);
@@ -37,7 +37,6 @@ public class PosValidator {
         KafkaConsumer<String, PosInvoice> consumer = new KafkaConsumer<>(consumerProps);
         consumer.subscribe(Arrays.asList(AppConfigs.sourceTopicNames));
 
-        // Producer
         Properties producerProps = new Properties();
         producerProps.put(ProducerConfig.CLIENT_ID_CONFIG, AppConfigs.applicationID);
         producerProps.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, AppConfigs.bootstrapServers);
@@ -49,16 +48,17 @@ public class PosValidator {
         while (true) {
             ConsumerRecords<String, PosInvoice> records = consumer.poll(Duration.ofMillis(100));
             for (ConsumerRecord<String, PosInvoice> record : records) {
-                if (record.value().getDeliveryType().equals("HOME-DELIVERY") && record.value().getDeliveryAddress().getContactNumber().equals("")) {
+                if (record.value().getDeliveryType().equals("HOME-DELIVERY") &&
+                    record.value().getDeliveryAddress().getContactNumber().equals("")) {
                     //Invalid
-                    System.out.println("------------------------------------------");
-                    producer.send(new ProducerRecord<>(AppConfigs.invalidTopicName, record.value().getStoreID(), record.value()));
-                    logger.info("## invalid record - " + record.value().getInvoiceNumber());
+                    producer.send(new ProducerRecord<>(AppConfigs.invalidTopicName, record.value().getStoreID(),
+                        record.value()));
+                    logger.info("invalid record - " + record.value().getInvoiceNumber());
                 } else {
                     //Valid
-                    System.out.println("===========================================");
-                    producer.send(new ProducerRecord<>(AppConfigs.validTopicName, record.value().getStoreID(), record.value()));
-                    logger.info(">>> valid record - " + record.value().getInvoiceNumber());
+                    producer.send(new ProducerRecord<>(AppConfigs.validTopicName, record.value().getStoreID(),
+                        record.value()));
+                    logger.info("valid record - " + record.value().getInvoiceNumber());
                 }
             }
         }
