@@ -28,6 +28,11 @@ and then run the pos-simulator app
 {"InvoiceNumber":"26117779","CreatedTime":1667130312445,"StoreID":"STR6347","PosID":"POS622","CashierID":"OAS793","CustomerType":"PRIME","CustomerCardNo":"5697125813","TotalAmount":5630.0,"NumberOfItems":3,"PaymentMethod":"CARD","TaxableAmount":5630.0,"CGST":140.75,"SGST":140.75,"CESS":7.0375000000000005,"DeliveryType":"HOME-DELIVERY","DeliveryAddress":{"AddressLine":"800-9178 Aliquam Street","City":"Karnal","State":"Haryana","PinCode":"132797","ContactNumber":"6883499359"},"InvoiceLineItems":[{"ItemCode":"548","ItemDescription":"Cartel clock","ItemPrice":1500.0,"ItemQty":1,"TotalValue":1500.0},{"ItemCode":"273","ItemDescription":"Bedroom set","ItemPrice":842.0,"ItemQty":2,"TotalValue":1684.0},{"ItemCode":"328","ItemDescription":"Dining chair","ItemPrice":1223.0,"ItemQty":2,"TotalValue":2446.0}]}
 
 ```
+<img width="1204" alt="Screenshot 2022-10-30 at 5 22 14 PM" src="https://user-images.githubusercontent.com/54174687/198877016-7f768909-2025-4be0-a0fa-36cb9a96867c.png">
+
+<img width="1200" alt="Screenshot 2022-10-30 at 5 21 04 PM" src="https://user-images.githubusercontent.com/54174687/198877008-5382f83f-4a09-4a3b-80fc-24aed7f2b0a3.png">
+
+
 
 
 <img width="1360" alt="Screenshot 2022-10-28 at 9 11 57 AM" src="https://user-images.githubusercontent.com/54174687/198497711-772b8d8b-be4b-44a4-a0c2-6fae9df9a013.png">
