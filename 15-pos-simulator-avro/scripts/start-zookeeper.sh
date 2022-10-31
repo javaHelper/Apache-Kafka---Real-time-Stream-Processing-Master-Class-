@@ -1,0 +1,1 @@
+$MY_CONFLUENT_HOME/bin/zookeeper-server-start $MY_CONFLUENT_HOME/etc/kafka/zookeeper.properties

@@ -1,0 +1,1 @@
+$MY_CONFLUENT_HOME/bin/kafka-server-start $MY_CONFLUENT_HOME/etc/kafka/server-2.properties

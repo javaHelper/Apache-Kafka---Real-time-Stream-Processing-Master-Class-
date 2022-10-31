@@ -1,0 +1,1 @@
+$MY_CONFLUENT_HOME/bin/schema-registry-start $MY_CONFLUENT_HOME/etc/schema-registry/schema-registry.properties
