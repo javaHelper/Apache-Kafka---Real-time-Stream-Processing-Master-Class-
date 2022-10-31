@@ -24,10 +24,10 @@ public class PosFanoutApp {
         KStream<String, PosInvoice> KS0 = builder.stream(AppConfigs.posTopicName,
             Consumed.with(AppSerdes.String(), AppSerdes.PosInvoice()));
 
-        KS0.filter((k, v) -> v.getDeliveryType().toString().equalsIgnoreCase(AppConfigs.DELIVERY_TYPE_HOME_DELIVERY))
+        KS0.filter((k, v) -> AppConfigs.DELIVERY_TYPE_HOME_DELIVERY.equalsIgnoreCase(v.getDeliveryType().toString()))
             .to(AppConfigs.shipmentTopicName, Produced.with(AppSerdes.String(), AppSerdes.PosInvoice()));
 
-        KS0.filter((k, v) -> v.getCustomerType().toString().equalsIgnoreCase(AppConfigs.CUSTOMER_TYPE_PRIME))
+        KS0.filter((k, v) -> AppConfigs.CUSTOMER_TYPE_PRIME.equalsIgnoreCase(v.getCustomerType().toString()))
             .mapValues(RecordBuilder::getNotification)
             .to(AppConfigs.notificationTopic, Produced.with(AppSerdes.String(), AppSerdes.Notification()));
 

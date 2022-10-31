@@ -25,8 +25,8 @@ public class PosSimulator {
             System.exit(-1);
         }
         String topicName = args[0];
-        int noOfProducers = new Integer(args[1]);
-        int produceSpeed = new Integer(args[2]);
+        int noOfProducers = Integer.parseInt(args[1]);
+        int produceSpeed = Integer.parseInt(args[2]);
 
         Properties properties = new Properties();
         properties.put(ProducerConfig.CLIENT_ID_CONFIG, AppConfigs.applicationID);
@@ -51,7 +51,7 @@ public class PosSimulator {
             executor.shutdown();
             logger.info("Closing Executor Service");
             try {
-                executor.awaitTermination(produceSpeed * 2, TimeUnit.MILLISECONDS);
+                executor.awaitTermination(produceSpeed * 2L, TimeUnit.MILLISECONDS);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }

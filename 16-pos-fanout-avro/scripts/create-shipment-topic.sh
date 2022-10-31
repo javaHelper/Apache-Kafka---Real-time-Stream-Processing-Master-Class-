@@ -1,1 +1,1 @@
-kafka-topics --create --bootstrap-server localhost:9092 --replication-factor 1 --partitions 2 --topic shipment
+$MY_CONFLUENT_HOME/bin/kafka-topics --create --bootstrap-server localhost:9092 --replication-factor 3 --partitions 2 --topic shipment --config min.insync.replicas=2

@@ -23,13 +23,6 @@ import guru.learningjournal.kafka.examples.types.PosInvoice;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Transform Invoice to other Objects
- *
- * @author prashant
- * @author www.learningjournal.guru
- */
-
 class RecordBuilder {
     /**
      * Create a flattened List of HadoopRecords from Invoice
