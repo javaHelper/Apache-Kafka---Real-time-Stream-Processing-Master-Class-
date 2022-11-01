@@ -1,5 +1,7 @@
 # Age Count 
 
+Note: Use confluent Kafka directly, do not use multi node cluster setup!
+
 ----
 
 ```sh
