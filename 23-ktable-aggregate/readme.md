@@ -24,3 +24,7 @@ This is from producer console, first send only 5 entry, check result, then 6th c
 [Department Aggregate]: support, guru.learningjournal.kafka.examples.types.DepartmentAggregate@59ec1111[totalSalary=11000,employeeCount=2,avgSalary=5500.0]
 [Department Aggregate]: engineering, guru.learningjournal.kafka.examples.types.DepartmentAggregate@ab94509[totalSalary=10000,employeeCount=2,avgSalary=5000.0]
 ```
+<img width="834" alt="Screenshot 2022-11-01 at 7 31 16 PM" src="https://user-images.githubusercontent.com/54174687/199251559-4cdc7715-def4-4260-b6ce-8837acb4c2a8.png">
+
+<img width="868" alt="Screenshot 2022-11-01 at 7 31 03 PM" src="https://user-images.githubusercontent.com/54174687/199251543-2985beb7-b06c-48e0-9a0f-8448c6875adc.png">
+
