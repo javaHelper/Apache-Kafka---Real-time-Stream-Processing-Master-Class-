@@ -15,7 +15,8 @@ import java.util.Properties;
 public class StreamingTableApp {
     private static final Logger logger = LogManager.getLogger();
 
-    public static void main(String[] args) {
+    public static void main(final String[] args) {
+
         final Properties props = new Properties();
         props.put(StreamsConfig.APPLICATION_ID_CONFIG, AppConfigs.applicationID);
         props.put(StreamsConfig.BOOTSTRAP_SERVERS_CONFIG, AppConfigs.bootstrapServers);
@@ -28,7 +29,7 @@ public class StreamingTableApp {
         KT0.toStream().print(Printed.<String, String>toSysOut().withLabel("KT0"));
 
         KTable<String, String> KT1 = KT0.filter((k, v) -> k.matches(AppConfigs.regExSymbol) && !v.isEmpty(),
-                Materialized.as(AppConfigs.stateStoreName));
+            Materialized.as(AppConfigs.stateStoreName));
         KT1.toStream().print(Printed.<String, String>toSysOut().withLabel("KT1"));
 
         KafkaStreams streams = new KafkaStreams(streamsBuilder.build(), props);
@@ -48,5 +49,6 @@ public class StreamingTableApp {
             queryServer.stop();
             streams.close();
         }));
+
     }
 }

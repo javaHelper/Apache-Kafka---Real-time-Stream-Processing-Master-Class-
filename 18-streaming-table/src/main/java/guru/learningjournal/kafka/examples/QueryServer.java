@@ -37,7 +37,10 @@ class QueryServer {
 
         List<KeyValue<String, String>> localResults = new ArrayList<>();
         ReadOnlyKeyValueStore<String, String> stateStore =
-                streams.store(AppConfigs.stateStoreName, QueryableStoreTypes.keyValueStore());
+            streams.store(
+                AppConfigs.stateStoreName,
+                QueryableStoreTypes.keyValueStore()
+            );
 
         stateStore.all().forEachRemaining(localResults::add);
         return localResults;
@@ -45,7 +48,7 @@ class QueryServer {
 
     void start() {
         logger.info("Starting Query Server at http://" + hostInfo.host() + ":" + hostInfo.port()
-                + "/" + AppConfigs.stateStoreName + "/all");
+            + "/" + AppConfigs.stateStoreName + "/all");
 
         Spark.port(hostInfo.port());
 
@@ -59,7 +62,7 @@ class QueryServer {
             } else {
                 allResults = readAllFromLocal();
                 results = (allResults.size() == 0) ? NO_RESULTS
-                        : allResults.toString();
+                    : allResults.toString();
             }
             return results;
         });
