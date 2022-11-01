@@ -46,3 +46,12 @@ Store ID: STR1534 Window ID: 2050479689 Window start: 2019-02-05T10:00Z Window e
 Store ID: STR1534 Window ID: 2051079849 Window start: 2019-02-05T10:05Z Window end: 2019-02-05T10:10Z Count: 1
 Store ID: STR1535 Window ID: 2050479689 Window start: 2019-02-05T10:00Z Window end: 2019-02-05T10:05Z Count: 3 
 ```
+
+<img width="1148" alt="Screenshot 2022-11-01 at 7 26 24 PM" src="https://user-images.githubusercontent.com/54174687/199250604-2ae650f0-a5fe-479c-bcc1-906fc425c38c.png">
+
+<img width="1017" alt="Screenshot 2022-11-01 at 7 26 39 PM" src="https://user-images.githubusercontent.com/54174687/199250631-a45f775a-03a7-481f-94d2-0ebaddead708.png">
+
+<img width="1063" alt="Screenshot 2022-11-01 at 7 27 05 PM" src="https://user-images.githubusercontent.com/54174687/199250651-4fe192b8-ae47-470c-b2bd-4a2f364fbc30.png">
+
+<img width="993" alt="Screenshot 2022-11-01 at 7 26 53 PM" src="https://user-images.githubusercontent.com/54174687/199250643-1944f540-e908-475c-b92b-6d9e958c59c7.png">
+
