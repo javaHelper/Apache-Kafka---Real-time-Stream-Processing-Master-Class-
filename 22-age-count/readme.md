@@ -27,3 +27,5 @@ Console
 [Age Count]: 27, 1
 
 ```
+
+<img width="1493" alt="Screenshot 2022-11-01 at 4 17 25 PM" src="https://user-images.githubusercontent.com/54174687/199216704-6ac37a9b-15ef-4e39-b817-8c388862731c.png">
