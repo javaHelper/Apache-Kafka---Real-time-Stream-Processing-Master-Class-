@@ -30,11 +30,19 @@ public class PosValidator {
         consumerProps.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, AppConfigs.bootstrapServers);
         consumerProps.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
         consumerProps.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, JsonDeserializer.class);
+
+        // Target Deserialized Java class name
         consumerProps.put(JsonDeserializer.VALUE_CLASS_NAME_CONFIG, PosInvoice.class);
+
+        // Needed for Kafka Consumer Groups
         consumerProps.put(ConsumerConfig.GROUP_ID_CONFIG, AppConfigs.groupID);
+
+        // Kafka offsets and consumer positions
         consumerProps.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
 
         KafkaConsumer<String, PosInvoice> consumer = new KafkaConsumer<>(consumerProps);
+
+        // kafka consumer can subscribe to a multiple (list) of topic
         consumer.subscribe(Arrays.asList(AppConfigs.sourceTopicNames));
 
         Properties producerProps = new Properties();
@@ -48,14 +56,13 @@ public class PosValidator {
         while (true) {
             ConsumerRecords<String, PosInvoice> records = consumer.poll(Duration.ofMillis(100));
             for (ConsumerRecord<String, PosInvoice> record : records) {
-                if (record.value().getDeliveryType().equals("HOME-DELIVERY") &&
-                    record.value().getDeliveryAddress().getContactNumber().equals("")) {
-                    //Invalid
+                if ("HOME-DELIVERY".equals(record.value().getDeliveryType()) && "".equals(record.value().getDeliveryAddress().getContactNumber())) {
+                    //Send to Invalid Topic
                     producer.send(new ProducerRecord<>(AppConfigs.invalidTopicName, record.value().getStoreID(),
                         record.value()));
                     logger.info("invalid record - " + record.value().getInvoiceNumber());
                 } else {
-                    //Valid
+                    //Send to Valid Topic
                     producer.send(new ProducerRecord<>(AppConfigs.validTopicName, record.value().getStoreID(),
                         record.value()));
                     logger.info("valid record - " + record.value().getInvoiceNumber());
