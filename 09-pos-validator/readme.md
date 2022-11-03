@@ -40,10 +40,6 @@ console of pos-smulator
 - console logs from pos-validator
 
 ```logs
-[2022-10-30 15:47:34,814] (org.apache.kafka.clients.NetworkClient) - WARN [Producer clientId=PosValidator] Error while fetching metadata with correlation id 4 : {valid-pos=LEADER_NOT_AVAILABLE} 
-[2022-10-30 15:47:34,936] (org.apache.kafka.clients.NetworkClient) - WARN [Producer clientId=PosValidator] Error while fetching metadata with correlation id 5 : {valid-pos=LEADER_NOT_AVAILABLE} 
-[2022-10-30 15:47:35,041] (org.apache.kafka.clients.NetworkClient) - WARN [Producer clientId=PosValidator] Error while fetching metadata with correlation id 6 : {valid-pos=LEADER_NOT_AVAILABLE} 
-[2022-10-30 15:47:35,149] (org.apache.kafka.clients.NetworkClient) - WARN [Producer clientId=PosValidator] Error while fetching metadata with correlation id 7 : {valid-pos=LEADER_NOT_AVAILABLE} 
 [2022-10-30 15:47:35,332] (guru.learningjournal.kafka.examples.PosValidator) - INFO valid record - 7967718 
 [2022-10-30 15:47:35,337] (guru.learningjournal.kafka.examples.PosValidator) - INFO valid record - 98954431 
 [2022-10-30 15:47:35,337] (guru.learningjournal.kafka.examples.PosValidator) - INFO valid record - 47091002 
