@@ -1,8 +1,8 @@
 # pos simulator 
 
-Note: Please run the 05-pos-simulator demo first.
+>>> `Note: Please run the 05-pos-simulator demo first.`
 
-console of pos-smulator
+- console of pos-smulator
 
 ```logs
 [2022-10-30 15:47:12,224] (guru.learningjournal.kafka.examples.RunnableProducer) - INFO Starting producer thread - 1 
@@ -106,6 +106,8 @@ consumer
 @Prateeks-MacBook-Pro scripts % /bin/zsh /Users/prats/Documents/Prateek/Apache-Kafka---Real-time-Stream-Processing-Master-Class-/09-pos-validator/scripts/2.invalid-pos-consumer.sh
 
 ```
+
+<img width="1213" alt="Screenshot 2022-11-03 at 11 51 44 AM" src="https://user-images.githubusercontent.com/54174687/199658581-38f4d9ef-0589-4dea-8b26-32e8cc964cd5.png">
 
 
 
