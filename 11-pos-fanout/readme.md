@@ -1,6 +1,9 @@
 # Streams Topology
 ---
 
+<img width="1150" alt="Screenshot 2022-11-04 at 8 18 20 PM" src="https://user-images.githubusercontent.com/54174687/200004338-53729900-e787-49ec-903f-cf1d957facc6.png">
+
+
 Note: Start Zookepper and 3 node kafka server, also created all topics and start the consumers - hadoop sink and shipment and then start the main app
 
 and then run the pos-simulator app
