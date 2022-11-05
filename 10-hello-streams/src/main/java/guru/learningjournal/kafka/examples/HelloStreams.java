@@ -18,6 +18,9 @@ public class HelloStreams {
         Properties props = new Properties();
         props.put(StreamsConfig.APPLICATION_ID_CONFIG, AppConfigs.applicationID);
         props.put(StreamsConfig.BOOTSTRAP_SERVERS_CONFIG, AppConfigs.bootstrapServers);
+
+        // Serdes is factory class that combines Serializer and Deserializer - streams will read and write as
+        // well hence they internally created producer and consumer
         props.put(StreamsConfig.DEFAULT_KEY_SERDE_CLASS_CONFIG, Serdes.Integer().getClass());
         props.put(StreamsConfig.DEFAULT_VALUE_SERDE_CLASS_CONFIG, Serdes.String().getClass());
 
