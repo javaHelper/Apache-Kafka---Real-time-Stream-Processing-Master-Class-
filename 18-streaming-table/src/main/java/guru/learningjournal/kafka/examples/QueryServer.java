@@ -37,10 +37,7 @@ class QueryServer {
 
         List<KeyValue<String, String>> localResults = new ArrayList<>();
         ReadOnlyKeyValueStore<String, String> stateStore =
-            streams.store(
-                AppConfigs.stateStoreName,
-                QueryableStoreTypes.keyValueStore()
-            );
+            streams.store(AppConfigs.stateStoreName, QueryableStoreTypes.keyValueStore());
 
         stateStore.all().forEachRemaining(localResults::add);
         return localResults;

@@ -23,6 +23,7 @@ public class RewardsTransformer implements ValueTransformer<PosInvoice, Notifica
             .withTotalAmount(posInvoice.getTotalAmount())
             .withEarnedLoyaltyPoints(posInvoice.getTotalAmount() * AppConfigs.LOYALTY_FACTOR)
             .withTotalLoyaltyPoints(0.0);
+
         Double accumulatedRewards = stateStore.get(notification.getCustomerCardNo());
         Double totalRewards;
         if (accumulatedRewards != null)

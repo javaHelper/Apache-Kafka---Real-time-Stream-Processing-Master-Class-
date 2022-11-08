@@ -26,6 +26,8 @@ public class StreamingTableApp {
 
         StreamsBuilder streamsBuilder = new StreamsBuilder();
         KTable<String, String> KT0 = streamsBuilder.table(AppConfigs.topicName);
+
+        //Print the incoming message
         KT0.toStream().print(Printed.<String, String>toSysOut().withLabel("KT0"));
 
         KTable<String, String> KT1 = KT0.filter((k, v) -> k.matches(AppConfigs.regExSymbol) && !v.isEmpty(),
