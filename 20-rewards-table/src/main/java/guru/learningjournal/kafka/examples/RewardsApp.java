@@ -2,11 +2,14 @@ package guru.learningjournal.kafka.examples;
 
 import guru.learningjournal.kafka.examples.serde.AppSerdes;
 import guru.learningjournal.kafka.examples.types.Notification;
+import guru.learningjournal.kafka.examples.types.PosInvoice;
 import org.apache.kafka.streams.KafkaStreams;
 import org.apache.kafka.streams.KeyValue;
 import org.apache.kafka.streams.StreamsBuilder;
 import org.apache.kafka.streams.StreamsConfig;
 import org.apache.kafka.streams.kstream.*;
+import org.apache.kafka.streams.state.StoreBuilder;
+import org.apache.kafka.streams.state.Stores;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -19,12 +22,16 @@ public class RewardsApp {
         Properties props = new Properties();
         props.put(StreamsConfig.APPLICATION_ID_CONFIG, AppConfigs.applicationID);
         props.put(StreamsConfig.BOOTSTRAP_SERVERS_CONFIG, AppConfigs.bootstrapServers);
-        props.put(StreamsConfig.COMMIT_INTERVAL_MS_CONFIG, 0);
+        props.put(StreamsConfig.COMMIT_INTERVAL_MS_CONFIG,0);
 
-        StreamsBuilder streamsBuilder = new StreamsBuilder();
-        KStream<String, Notification> KS0 = streamsBuilder.stream(AppConfigs.posTopicName, Consumed.with(AppSerdes.String(), AppSerdes.PosInvoice()))
-                .filter((key, value) -> AppConfigs.CUSTOMER_TYPE_PRIME.equalsIgnoreCase(value.getCustomerType()))
-                .map((key, invoice) -> new KeyValue<>(invoice.getCustomerCardNo(), Notifications.getNotificationFrom(invoice)));
+        StreamsBuilder builder = new StreamsBuilder();
+        KStream<String, Notification> KS0 = builder.stream(AppConfigs.posTopicName,
+            Consumed.with(AppSerdes.String(), AppSerdes.PosInvoice()))
+            .filter((key, value) -> value.getCustomerType().equalsIgnoreCase(AppConfigs.CUSTOMER_TYPE_PRIME))
+            .map((key, invoice) -> new KeyValue<>(
+                invoice.getCustomerCardNo(),
+                Notifications.getNotificationFrom(invoice)
+            ));
 
         KGroupedStream<String, Notification> KGS0 = KS0.groupByKey(Grouped.with(AppSerdes.String(), AppSerdes.Notification()));
 
@@ -36,7 +43,7 @@ public class RewardsApp {
         KT0.toStream().to(AppConfigs.notificationTopic, Produced.with(AppSerdes.String(), AppSerdes.Notification()));
 
         logger.info("Starting Stream");
-        KafkaStreams stream = new KafkaStreams(streamsBuilder.build(), props);
+        KafkaStreams stream = new KafkaStreams(builder.build(), props);
         stream.start();
 
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {

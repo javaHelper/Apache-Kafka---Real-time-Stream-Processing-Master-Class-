@@ -25,26 +25,24 @@ public class KStreamAggDemo {
 
         StreamsBuilder streamsBuilder = new StreamsBuilder();
 
-        streamsBuilder.stream(AppConfigs.topicName,
-            Consumed.with(AppSerdes.String(), AppSerdes.Employee()))
-            .groupBy((k,v) -> v.getDepartment(), Grouped.with(AppSerdes.String(),AppSerdes.Employee()))
-            .aggregate(
-                //Initializer
-                ()-> new DepartmentAggregate()
-                .withEmployeeCount(0)
-                .withTotalSalary(0)
-                .withAvgSalary(0D),
-                //Aggregator
-                (k,v,aggValue) ->
-                    new DepartmentAggregate()
-                .withEmployeeCount(aggValue.getEmployeeCount()+1)
-                .withTotalSalary(aggValue.getTotalSalary() + v.getSalary())
-                .withAvgSalary((aggValue.getTotalSalary()+v.getSalary())/(aggValue.getEmployeeCount()+1D)),
-                //Serializer
-                Materialized.<String,DepartmentAggregate, KeyValueStore<Bytes, byte[]>>as(AppConfigs.stateStoreName)
-                .withKeySerde(AppSerdes.String())
-                .withValueSerde(AppSerdes.DepartmentAggregate())
-            ).toStream().print(Printed.<String, DepartmentAggregate>toSysOut().withLabel("Department Salary Average"));
+        streamsBuilder.stream(AppConfigs.topicName, Consumed.with(AppSerdes.String(), AppSerdes.Employee()))
+                .groupBy((k, v) -> v.getDepartment(), Grouped.with(AppSerdes.String(), AppSerdes.Employee()))
+                .aggregate(
+                        //Initializer
+                        () -> new DepartmentAggregate().withEmployeeCount(0).withTotalSalary(0).withAvgSalary(0D),
+
+                        //Aggregator
+                        (k, v, aggValue) -> new DepartmentAggregate()
+                                .withEmployeeCount(aggValue.getEmployeeCount() + 1)
+                                .withTotalSalary(aggValue.getTotalSalary() + v.getSalary())
+                                .withAvgSalary((aggValue.getTotalSalary() + v.getSalary()) / (aggValue.getEmployeeCount() + 1D)),
+
+                        //Serializer
+                        Materialized.<String, DepartmentAggregate, KeyValueStore<Bytes, byte[]>>as(AppConfigs.stateStoreName)
+                                .withKeySerde(AppSerdes.String())
+                                .withValueSerde(AppSerdes.DepartmentAggregate())
+                ).toStream()
+                .print(Printed.<String, DepartmentAggregate>toSysOut().withLabel("Department Salary Average"));
 
 
         KafkaStreams streams = new KafkaStreams(streamsBuilder.build(), props);
