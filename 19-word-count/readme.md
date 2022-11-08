@@ -50,19 +50,17 @@ public class WordCountApp {
 ```
 
 ```sh
-@Prateeks-MacBook-Pro scripts % /bin/zsh /Users/prats/Documents/Prateek/Apache-Kafka---Real-time-Stream-Processing-Master-Class-/19-word-count/scripts/producer-start.sh
->hello java
->hello spring
->hello world
+prateekashtikar@Prateeks-MacBook-Pro scripts % /bin/zsh /Users/prats/Documents/Prateek/Apache-Kafka---Real-time-Stream-Processing-Master-Class-/19-word-count/scripts/producer-start.sh
+>Hello World 
+>Hello Kafka Streams
+>
 ```
 
 - Console output 
 
 ```
-prateekashtikar@Prateeks-MacBook-Pro scripts % /bin/zsh /Users/prats/Documents/Prateek/Apache-Kafka---Real-time-Stream-Processing-Master-Class-/19-word-count/scripts/producer-start.sh
->hello java
->hello spring
->hello world
+[KT1]: hello, 2
+[KT1]: streams, 1
+[KT1]: world, 1
+[KT1]: kafka, 1
 ```
-
-
