@@ -32,7 +32,7 @@ public class CountingWindowApp {
         );
 
         KTable<Windowed<String>, Long> KT0 = KS0.groupByKey(Grouped.with(AppSerdes.String(), AppSerdes.SimpleInvoice()))
-            .windowedBy(TimeWindows.of(Duration.ofMinutes(5)))
+            .windowedBy(TimeWindows.ofSizeWithNoGrace(Duration.ofMinutes(5)))
             .count();
 
         KT0.toStream().foreach(

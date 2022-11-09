@@ -25,32 +25,29 @@ public class KTableAggDemo {
         props.put(StreamsConfig.APPLICATION_ID_CONFIG, AppConfigs.applicationID);
         props.put(StreamsConfig.BOOTSTRAP_SERVERS_CONFIG, AppConfigs.bootstrapServers);
         props.put(StreamsConfig.STATE_DIR_CONFIG, AppConfigs.stateStoreLocation);
-        props.put(StreamsConfig.COMMIT_INTERVAL_MS_CONFIG,100);
+        props.put(StreamsConfig.COMMIT_INTERVAL_MS_CONFIG, 100);
 
         StreamsBuilder streamsBuilder = new StreamsBuilder();
         streamsBuilder.table(AppConfigs.topicName,
-            Consumed.with(AppSerdes.String(), AppSerdes.Employee()))
-            .groupBy((k, v) -> KeyValue.pair(v.getDepartment(), v), Grouped.with(AppSerdes.String(), AppSerdes.Employee()))
-            .aggregate(
-                //Initializer
-                () -> new DepartmentAggregate()
-                    .withEmployeeCount(0)
-                    .withTotalSalary(0)
-                    .withAvgSalary(0D),
-                //Adder
-                (k, v, aggV) -> new DepartmentAggregate()
-                    .withEmployeeCount(aggV.getEmployeeCount() + 1)
-                    .withTotalSalary(aggV.getTotalSalary() + v.getSalary())
-                    .withAvgSalary((aggV.getTotalSalary() + v.getSalary()) / (aggV.getEmployeeCount() + 1D)),
-                //Subtractor
-                (k, v, aggV) -> new DepartmentAggregate()
-                    .withEmployeeCount(aggV.getEmployeeCount() - 1)
-                    .withTotalSalary(aggV.getTotalSalary() - v.getSalary())
-                    .withAvgSalary((aggV.getTotalSalary() - v.getSalary()) / (aggV.getEmployeeCount() - 1D)),
-                //Serializer
-                Materialized.<String, DepartmentAggregate, KeyValueStore<Bytes, byte[]>>as(
-                    AppConfigs.stateStoreName).withValueSerde(AppSerdes.DepartmentAggregate())
-            ).toStream().print(Printed.<String, DepartmentAggregate>toSysOut().withLabel("Department Aggregate"));
+                        Consumed.with(AppSerdes.String(), AppSerdes.Employee()))
+                .groupBy((k, v) -> KeyValue.pair(v.getDepartment(), v), Grouped.with(AppSerdes.String(), AppSerdes.Employee()))
+                .aggregate(
+                        //Initializer
+                        () -> new DepartmentAggregate().withEmployeeCount(0).withTotalSalary(0).withAvgSalary(0D),
+                        //Adder
+                        (k, v, aggV) -> new DepartmentAggregate()
+                                .withEmployeeCount(aggV.getEmployeeCount() + 1)
+                                .withTotalSalary(aggV.getTotalSalary() + v.getSalary())
+                                .withAvgSalary((aggV.getTotalSalary() + v.getSalary()) / (aggV.getEmployeeCount() + 1D)),
+                        //Subtracter
+                        (k, v, aggV) -> new DepartmentAggregate()
+                                .withEmployeeCount(aggV.getEmployeeCount() - 1)
+                                .withTotalSalary(aggV.getTotalSalary() - v.getSalary())
+                                .withAvgSalary((aggV.getTotalSalary() - v.getSalary()) / (aggV.getEmployeeCount() - 1D)),
+                        //Serializer
+                        Materialized.<String, DepartmentAggregate, KeyValueStore<Bytes, byte[]>>as(
+                                AppConfigs.stateStoreName).withValueSerde(AppSerdes.DepartmentAggregate())
+                ).toStream().print(Printed.<String, DepartmentAggregate>toSysOut().withLabel("Department Aggregate"));
 
         KafkaStreams streams = new KafkaStreams(streamsBuilder.build(), props);
         streams.start();
