@@ -36,10 +36,9 @@ public class KStreamJoinDemo {
                 .withTimestampExtractor(AppTimestampExtractor.PaymentConfirmation())
         );
 
-        KS0.join(KS1, (v1, v2) ->
-                new TransactionStatus()
-                    .withTransactionID(v1.getTransactionID())
-                    .withStatus((v1.getOTP().equals(v2.getOTP()) ? "Success" : "Failure")),
+        KS0.join(KS1, (v1, v2) -> new TransactionStatus()
+                        .withTransactionID(v1.getTransactionID())
+                        .withStatus((v1.getOTP().equals(v2.getOTP()) ? "Success" : "Failure")),
             JoinWindows.of(Duration.ofMinutes(5)),
             Joined.with(AppSerdes.String(), AppSerdes.PaymentRequest(), AppSerdes.PaymentConfirmation())
         ).print(Printed.toSysOut());
