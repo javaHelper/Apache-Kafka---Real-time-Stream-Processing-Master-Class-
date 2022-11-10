@@ -12,7 +12,7 @@ import java.util.TreeSet;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
-    "top3Sorted"
+        "top3Sorted"
 })
 public class Top3NewsTypes {
     private ObjectMapper mapper = new ObjectMapper();
@@ -31,7 +31,7 @@ public class Top3NewsTypes {
         }
     }
 
-    public void remove(ClicksByNewsType oldValue){
+    public void remove(ClicksByNewsType oldValue) {
         top3Sorted.remove(oldValue);
     }
 
@@ -43,7 +43,7 @@ public class Top3NewsTypes {
     @JsonProperty("top3Sorted")
     public void setTop3Sorted(String top3String) throws IOException {
         ClicksByNewsType[] top3 = mapper.readValue(top3String, ClicksByNewsType[].class);
-        for (ClicksByNewsType i:top3){
+        for (ClicksByNewsType i : top3) {
             add(i);
         }
     }

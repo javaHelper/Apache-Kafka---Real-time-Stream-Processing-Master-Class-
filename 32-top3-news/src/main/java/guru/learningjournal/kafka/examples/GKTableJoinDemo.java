@@ -30,43 +30,43 @@ public class GKTableJoinDemo {
 
         StreamsBuilder streamsBuilder = new StreamsBuilder();
         GlobalKTable<String, AdInventories> GKT0 = streamsBuilder.globalTable(AppConfigs.inventoryTopic,
-            Consumed.with(AppSerdes.String(), AppSerdes.AdInventories())
+                Consumed.with(AppSerdes.String(), AppSerdes.AdInventories())
         );
 
         KStream<String, AdClick> KS1 = streamsBuilder.stream(AppConfigs.clicksTopic,
-            Consumed.with(AppSerdes.String(), AppSerdes.AdClick())
+                Consumed.with(AppSerdes.String(), AppSerdes.AdClick())
         );
 
         KTable<String, Long> KT1 = KS1.join(GKT0, (k, v) -> k, (v1, v2) -> v2)
-            .groupBy((k, v) -> v.getNewsType(), Grouped.with(AppSerdes.String(), AppSerdes.AdInventories()))
-            .count();
+                .groupBy((k, v) -> v.getNewsType(), Grouped.with(AppSerdes.String(), AppSerdes.AdInventories()))
+                .count();
 
         KT1.groupBy((k, v) -> {
-                ClicksByNewsType value = new ClicksByNewsType();
-                value.setNewsType(k);
-                value.setClicks(v);
-                return KeyValue.pair(AppConfigs.top3AggregateKey, value);
-            }, Grouped.with(AppSerdes.String(), AppSerdes.ClicksByNewsType())
-        ).aggregate(() -> new Top3NewsTypes(),
-            (k, newV, aggV) -> {
-                aggV.add(newV);
-                return aggV;
-            },
-            (k, oldV, aggV) -> {
-                aggV.remove(oldV);
-                return aggV;
-            },
-            Materialized.<String, Top3NewsTypes, KeyValueStore<Bytes, byte[]>>
-                as("top3-clicks")
-                .withKeySerde(AppSerdes.String())
-                .withValueSerde(AppSerdes.Top3NewsTypes()))
-            .toStream().foreach((k, v) -> {
-            try {
-                logger.info("k=" + k + " v= " + v.getTop3Sorted());
-            } catch (JsonProcessingException e) {
-                e.printStackTrace();
-            }
-        });
+                            ClicksByNewsType value = new ClicksByNewsType();
+                            value.setNewsType(k);
+                            value.setClicks(v);
+                            return KeyValue.pair(AppConfigs.top3AggregateKey, value);
+                        }, Grouped.with(AppSerdes.String(), AppSerdes.ClicksByNewsType())
+                ).aggregate(() -> new Top3NewsTypes(),
+                        (k, newV, aggV) -> {
+                            aggV.add(newV);
+                            return aggV;
+                        },
+                        (k, oldV, aggV) -> {
+                            aggV.remove(oldV);
+                            return aggV;
+                        },
+                        Materialized.<String, Top3NewsTypes, KeyValueStore<Bytes, byte[]>>
+                                        as("top3-clicks")
+                                .withKeySerde(AppSerdes.String())
+                                .withValueSerde(AppSerdes.Top3NewsTypes()))
+                .toStream().foreach((k, v) -> {
+                    try {
+                        logger.info("k=" + k + " v= " + v.getTop3Sorted());
+                    } catch (JsonProcessingException e) {
+                        e.printStackTrace();
+                    }
+                });
 
         logger.info("Starting Stream...");
         KafkaStreams streams = new KafkaStreams(streamsBuilder.build(), props);
